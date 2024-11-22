@@ -1,0 +1,63 @@
+CREATE TABLE Branch (
+    branch_name VARCHAR(50) PRIMARY KEY,
+    branch_city VARCHAR(50),
+    assets REAL
+);
+
+CREATE TABLE BankAccount (
+    accno INT PRIMARY KEY,
+    branch_name VARCHAR(50),
+    balance REAL,
+    FOREIGN KEY (branch_name) REFERENCES Branch(branch_name)
+);
+
+CREATE TABLE BankCustomer (
+    customer_name VARCHAR(50) PRIMARY KEY,
+    customer_street VARCHAR(50),
+    customer_city VARCHAR(50)
+);
+
+CREATE TABLE Depositer (
+    customer_name VARCHAR(50),
+    accno INT,
+    PRIMARY KEY (customer_name, accno),
+    FOREIGN KEY (customer_name) REFERENCES BankCustomer(customer_name),
+    FOREIGN KEY (accno) REFERENCES BankAccount(accno)
+);
+
+CREATE TABLE Loan (
+    loan_number INT PRIMARY KEY,
+    branch_name VARCHAR(50),
+    amount REAL,
+    FOREIGN KEY (branch_name) REFERENCES Branch(branch_name)
+);
+
+INSERT INTO Branch VALUES ('SBI_Main', 'Mumbai', 5000000);
+INSERT INTO Branch VALUES ('HDFC_Branch', 'Delhi', 3000000);
+INSERT INTO Branch VALUES ('ICICI_Main', 'Bangalore', 4500000);
+INSERT INTO Branch VALUES ('Axis_Branch', 'Mumbai', 2500000);
+INSERT INTO Branch VALUES ('SBI_Sub', 'Chennai', 2000000);
+
+INSERT INTO BankAccount VALUES (1001, 'SBI_Main', 150000);
+INSERT INTO BankAccount VALUES (1002, 'HDFC_Branch', 250000);
+INSERT INTO BankAccount VALUES (1003, 'ICICI_Main', 500000);
+INSERT INTO BankAccount VALUES (1004, 'Axis_Branch', 100000);
+INSERT INTO BankAccount VALUES (1005, 'SBI_Sub', 200000);
+
+INSERT INTO BankCustomer VALUES ('Ravi', 'MG Road', 'Bangalore');
+INSERT INTO BankCustomer VALUES ('Sneha', 'Brigade Road', 'Mumbai');
+INSERT INTO BankCustomer VALUES ('Anil', 'Connaught Place', 'Delhi');
+INSERT INTO BankCustomer VALUES ('Priya', 'Indiranagar', 'Bangalore');
+INSERT INTO BankCustomer VALUES ('Karan', 'T Nagar', 'Chennai');
+
+INSERT INTO Depositer VALUES ('Ravi', 1001);
+INSERT INTO Depositer VALUES ('Sneha', 1002);
+INSERT INTO Depositer VALUES ('Anil', 1003);
+INSERT INTO Depositer VALUES ('Priya', 1004);
+INSERT INTO Depositer VALUES ('Karan', 1005);
+
+INSERT INTO Loan VALUES (2001, 'SBI_Main', 1000000);
+INSERT INTO Loan VALUES (2002, 'HDFC_Branch', 500000);
+INSERT INTO Loan VALUES (2003, 'ICICI_Main', 800000);
+INSERT INTO Loan VALUES (2004, 'Axis_Branch', 300000);
+INSERT INTO Loan VALUES (2005, 'SBI_Sub', 200000);
