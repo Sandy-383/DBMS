@@ -1,0 +1,32 @@
+CREATE DATABASE studentfaculty;
+USE studentfaculty;
+
+CREATE TABLE student (
+    snum INT PRIMARY KEY,
+    sname VARCHAR(100),
+    major VARCHAR(50),
+    lvl INT,
+    age INT
+);
+
+CREATE TABLE faculty (
+    fid INT PRIMARY KEY,
+    fname VARCHAR(100),
+    deptid INT
+);
+
+CREATE TABLE class (
+    cname VARCHAR(100) PRIMARY KEY,
+    meets_at DATETIME,
+    room VARCHAR(50),
+    fid INT,
+    FOREIGN KEY (fid) REFERENCES faculty(fid)
+);
+
+CREATE TABLE enrolled (
+    snum INT,
+    cname VARCHAR(100),
+    PRIMARY KEY (snum, cname),
+    FOREIGN KEY (snum) REFERENCES student(snum),
+    FOREIGN KEY (cname) REFERENCES class(cname)
+);
