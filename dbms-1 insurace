@@ -1,0 +1,46 @@
+create database if not exists insurance;
+use insurance;
+create table if not exists person(driver_id varchar(10)primary key, name varchar(20),address varchar(30));
+create table if not exists car(reg_num varchar(10)primary key,model varchar(10),year int);
+create table if not exists accident(report_num varchar(10)primary key,accident_date date,location varchar(15));
+create table if not exists owns(driver_id varchar(10), reg_num varchar(10),primary key(driver_id, reg_num),foreign key(driver_id) references person(driver_id), foreign key(reg_num) references car(reg_num));
+create table if not exists participated(driver_id varchar(10), reg_num varchar(10), report_num varchar(10), damage_amt float, primary key(driver_id,reg_num,report_num), foreign key(driver_id) references person(driver_id), foreign key(reg_num) references car(reg_num), foreign key(report_num) references accident(report_num));
+
+/*insert into person values('A01', 'Richard', 'Srinivas Nagar');
+insert into person values('A02', 'Pradeep', 'Rajaji Nagar');
+insert into person values('A03', 'Smith', 'Ashok Nagar');
+insert into person values('A04', 'Venu', 'NR Colony');
+insert into person values('A05', 'John', 'Hanumanth Nagar');*/
+
+select * from person;
+
+/*insert into car values('KA5988', 'Innova', 2010);
+insert into car values('KA0522', 'Ertiga', 2022);
+insert into car values('KA5181', 'Benz', 2024);
+insert into car values('KA6464', 'BMW', 2020);
+insert into car values('KA9832', 'Ford', 2000);*/
+
+select * from car;
+
+/*(insert into accident values('2456', '2-12-22', 'Srinivas Nagar');
+insert into accident values('2980', '12-01-17', 'RajajiNagar');
+insert into accident values('3546', '8-5-23', 'AshokNagar');
+insert into accident values('6767', '15-7-24', 'GandhiNagar');
+insert into accident values('7823', '20-9-24', 'NR Colony');*/
+
+select * from accident;
+
+/*insert into owns values('A01', 'KA5988');
+insert into owns values('A02', 'KA0522');
+insert into owns values('A03', 'KA5181');
+insert into owns values('A04', 'KA6464');
+insert into owns values('A05', 'KA9832');*/
+
+select * from owns;
+
+/*insert into participated values('A01', 'KA5988', '2456', 23100.00);
+insert into participated values('A02', 'KA0522', '2980', 20000.28);
+insert into participated values('A03', 'KA5181', '3546', 35200.11);
+insert into participated values('A04', 'KA6464', '6767', 39189.00);*/
+
+select * from participated;
