@@ -46,3 +46,69 @@ insert into enrolled values(2,'class5');
 insert into enrolled values(3,'class5');
 insert into enrolled values(4,'class5');
 insert into enrolled values(5,'class5');
+select * from enrolled;
+
+
+SELECT DISTINCT s.sname
+FROM student s
+JOIN enrolled e ON s.snum = e.snum
+JOIN class c ON e.cname = c.cname
+WHERE s.lvl = 'Jr' AND c.fid = 14;
+
+SELECT DISTINCT c.cname
+FROM class c
+LEFT JOIN enrolled e ON c.cname = e.cname
+GROUP BY c.cname
+HAVING c.room = 'R128' OR COUNT(e.snum) >= 5;
+
+
+SELECT DISTINCT s.sname
+FROM student s
+JOIN enrolled e1 ON s.snum = e1.snum
+JOIN enrolled e2 ON s.snum = e2.snum
+JOIN class c1 ON e1.cname = c1.cname
+JOIN class c2 ON e2.cname = c2.cname
+WHERE e1.cname != e2.cname AND c1.meets_at = c2.meets_at;
+
+SELECT DISTINCT f.fname
+FROM faculty f
+WHERE NOT EXISTS (
+    SELECT r.room
+    FROM class r
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM class c
+        WHERE c.fid = f.fid AND c.room = r.room
+    )
+);
+
+SELECT DISTINCT f.fname
+FROM faculty f
+JOIN class c ON f.fid = c.fid
+LEFT JOIN enrolled e ON c.cname = e.cname
+GROUP BY f.fid
+HAVING COUNT(e.snum) < 5;
+
+SELECT DISTINCT s.sname
+FROM student s
+LEFT JOIN enrolled e ON s.snum = e.snum
+WHERE e.snum IS NULL;
+
+SELECT s.age, s.lvl
+FROM student s
+GROUP BY s.age, s.lvl
+HAVING COUNT(s.lvl) = (
+    SELECT MAX(level_count)
+    FROM (
+        SELECT COUNT(s1.lvl) AS level_count
+        FROM student s1
+        WHERE s1.age = s.age
+        GROUP BY s1.lvl
+    ) AS level_counts
+)
+ORDER BY s.age;
+
+
+
+
+
