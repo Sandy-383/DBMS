@@ -58,8 +58,10 @@ WHERE s.lvl = 'Jr' AND c.fid = 14;
 SELECT DISTINCT c.cname
 FROM class c
 LEFT JOIN enrolled e ON c.cname = e.cname
+WHERE c.room = 'R128' 
 GROUP BY c.cname
-HAVING c.room = 'R128' OR COUNT(e.snum) >= 5;
+HAVING COUNT(e.snum) >= 5;
+
 
 
 SELECT DISTINCT s.sname
